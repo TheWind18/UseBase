@@ -36,13 +36,10 @@ public abstract class DoAsync<Params, Progress, Result> extends SafeTask<Params,
         final Context target = mTarget.get();
         if (target != null) {
             try {
-//                L.d(this.hashCode() + "： on pre execute,class:" + target.getClass().getName());
                 this.onPreExecute(target);//运行前的准备
             } catch (Exception e) {
-//                L.d(this.hashCode() + "： on pre execute error!!!,class:" + target.getClass().getName());
             }
         } else {
-//            L.d(this.hashCode() + "： on pre execute context release!!!!!");
         }
     }
 
@@ -55,14 +52,11 @@ public abstract class DoAsync<Params, Progress, Result> extends SafeTask<Params,
         final Context target = mTarget.get();
         if (target != null) {
             try {
-//                L.d(this.hashCode() + "： on do in background execute,class:" + target.getClass().getName());
                 return this.doInBackground(target, paramses);//后台运行中
             } catch (Exception e) {
-//                L.d(this.hashCode() + "： on do in background error!!!,class:" + target.getClass().getName());
                 return null;
             }
         } else {
-//            L.d(this.hashCode() + "： on do in background context release!!!!!");
             return null;
         }
     }
@@ -76,13 +70,10 @@ public abstract class DoAsync<Params, Progress, Result> extends SafeTask<Params,
         final Context target = mTarget.get();
         if (target != null) {
             try {
-//                L.d(this.hashCode() + "： on post execute,class:" + target.getClass().getName());
                 this.onPostExecute(target, result);
             } catch (Exception e1) {
-//                L.d(this.hashCode() + "： on post execute,class:" + target.getClass().getName());
             }
         } else {
-//            L.d(this.hashCode() + "： on post context release!!!!!");
         }
     }
 
@@ -99,13 +90,10 @@ public abstract class DoAsync<Params, Progress, Result> extends SafeTask<Params,
         final Context target = mTarget.get();
         if (target != null) {
             try {
-//                L.d(this.hashCode() + "： on progress execute,class:" + target.getClass().getName());
                 this.onProgressUpdate(target, values);
             } catch (Exception e) {
-//                L.d(this.hashCode() + "： on progress execute,class:" + target.getClass().getName());
             }
         } else {
-//            L.d(this.hashCode() + "： on progress context release!!!!!");
         }
     }
 
