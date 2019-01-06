@@ -37,7 +37,7 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
     }
 
     public void init(Context ctx) {
-        context = ctx;
+        context = ctx.getApplicationContext();
         defaultHandler = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(this);
     }
@@ -82,7 +82,7 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
             @Override
             public void run() {
                 Looper.prepare();
-                Toast.makeText(context, "程序出现错误,即将退出！", Toast.LENGTH_LONG).show();
+//                Toast.makeText(context, "程序出现错误,即将退出！", Toast.LENGTH_LONG).show();
                 Looper.loop();
             }
         }.start();

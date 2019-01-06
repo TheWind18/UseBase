@@ -70,6 +70,7 @@ public class MediaUtils {
 
     public void prepare(String nowPath, OnPlayer pOnPlayer, final boolean prepare2start) {
         isPrepare = false;
+        canStart = false;
         addPlayListener(pOnPlayer);
         if (TextUtils.isEmpty(nowPath)) {
             stop();
@@ -100,7 +101,7 @@ public class MediaUtils {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
                     isPrepare = true;
-                    if (prepare2start) {
+                    if (prepare2start || canStart) {
                         mp.start();
                     }
                 }
@@ -126,7 +127,10 @@ public class MediaUtils {
 
     private boolean isPrepare = false;
 
+    private boolean canStart = false;
+
     public void start() {
+        canStart = true;
         if (mPlayer != null && isPrepare) {
             mPlayer.start();
         }
