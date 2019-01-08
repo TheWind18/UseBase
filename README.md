@@ -183,7 +183,7 @@ List<PackageInfo> getSystemInstallAppInfo(Context context)
 List<PackageInfo> getAllInstalledAppInfo(Context context)
 ```       
 
-- [SystemUtils](https://github.com/xuanu/UseBase/blob/master/usebaselib/src/main/java/zzx/zeffect/cn/usebaselib/pack/SystemUtils.java);      
+- [SystemUtils](https://github.com/xuanu/UseBase/blob/master/usebaselib/src/main/java/zzx/zeffect/cn/usebaselib/system/SystemUtils.java);      
 > 系统相关操作    
 ```
 void addCalendarEvent(Context pContext, String title, String location, Calendar begin, Calendar end)  添加日历
