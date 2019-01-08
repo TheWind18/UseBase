@@ -165,4 +165,45 @@ String encodeUrl(String input);//url编码
 String appendImgUrl(String url, String defaultAppend);//
 ```    
 
+- [PackageUtils](https://github.com/xuanu/UseBase/blob/master/usebaselib/src/main/java/zzx/zeffect/cn/usebaselib/pack/PackageUtils.java);
+> 包相关   
+```
+boolean isPackageExist(Context context, String packageName)  //应用是否安装
+boolean installNormal(Context context, String filePath)  
+boolean uninstallNormal(Context context, String packageName)
+boolean isSystemApplication(Context context, String packageName)
+long getAppVersionCode(Context context, String packageName)
+
+```    
+
+- [AppUtils](https://github.com/xuanu/UseBase/blob/master/usebaselib/src/main/java/zzx/zeffect/cn/usebaselib/pack/AppUtils.java);      
+```
+List<PackageInfo> getUserInstallAppInfo(Context context)
+List<PackageInfo> getSystemInstallAppInfo(Context context)
+List<PackageInfo> getAllInstalledAppInfo(Context context)
+```       
+
+- [SystemUtils](https://github.com/xuanu/UseBase/blob/master/usebaselib/src/main/java/zzx/zeffect/cn/usebaselib/pack/SystemUtils.java);      
+> 系统相关操作    
+```
+void addCalendarEvent(Context pContext, String title, String location, Calendar begin, Calendar end)  添加日历
+void startTimer(Context pContext, String message, int seconds)  添加倒计时
+void createAlarm(Context pContext, String message, int hour, int minutes, ArrayList<Integer> days) 添加闹钟
+int getCurBattery(Context pContext) 获取当前电量
+void maxVolume(Context pContext) 设置最大音量
+void maxVolume(Context pContext, int volumeType) 设置最大音量 
+void minVolume(Context pContext) 设置最小音量
+void minVolume(Context pContext, int volumeType) 设置最小音量
+void raiseVolume(Context pContext) 调高音量
+void raiseVolume(Context pContext, int volumeType) 调高音量
+void lowerVolume(Context pContext)  调低音量
+void lowerVolume(Context pContext, int volumeType) 调低音量
+int getScreenBrightness(Context pContext) 获取屏幕亮度
+void lowerBrightness(Context context) 调低屏幕亮度
+void raiseBrightness(Context context) 调高屏幕亮度
+void setScreenBrightness(Context pContext, int lighit) 设置屏幕亮度
+void setScrennManualMode(Context pContext) 设置手动调节亮度模式
+void setWindowBrightness(Activity activity, int brightness)  设置当前应用的亮度
+```     
+
 

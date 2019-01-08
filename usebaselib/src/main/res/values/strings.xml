@@ -1,2 +1,3 @@
 <resources>
+    <string name="base_default_alarm_message">系统闹钟</string>
 </resources>
