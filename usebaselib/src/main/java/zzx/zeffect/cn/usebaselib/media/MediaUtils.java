@@ -41,7 +41,7 @@ public class MediaUtils {
 
 
     public void playRaw(Context pContext, int id, OnPlayer pPlayer) {
-        if (pPlayer != null) addPlayListener(pPlayer);
+        addPlayListener(pPlayer);
         if (mPlayer == null) {
             mPlayer = MediaPlayer.create(pContext, id);
         }
@@ -137,7 +137,7 @@ public class MediaUtils {
     }
 
     private void play(String nowPath, OnPlayer pOnPlayer) {
-        prepare(nowPath, onPlayer, true);
+        prepare(nowPath, pOnPlayer, true);
     }
 
     public void pause() {
