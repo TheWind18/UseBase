@@ -1,14 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/showTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="base功能测试" />
+
+        <Button
+            android:id="@+id/testAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试一些值的获取" />
+
+        <Button
+            android:id="@+id/setMaxVolumeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设置最大音量" />
+
+        <Button
+            android:id="@+id/setMinVolumeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设置最小音量" />
+
+        <Button
+            android:id="@+id/raiseVolumeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="调高音量" />
+
+        <Button
+            android:id="@+id/lowerVolumeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="调低音量" />
+
+        <Button
+            android:id="@+id/raiseBrightBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="调高屏幕亮度" />
+
+        <Button
+            android:id="@+id/lowerBrightBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="调低屏幕亮度" />
+    </LinearLayout>
+</ScrollView>

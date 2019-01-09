@@ -198,11 +198,9 @@ void raiseVolume(Context pContext) 调高音量
 void raiseVolume(Context pContext, int volumeType) 调高音量
 void lowerVolume(Context pContext)  调低音量
 void lowerVolume(Context pContext, int volumeType) 调低音量
-int getScreenBrightness(Context pContext) 获取屏幕亮度
-void lowerBrightness(Context context) 调低屏幕亮度
-void raiseBrightness(Context context) 调高屏幕亮度
-void setScreenBrightness(Context pContext, int lighit) 设置屏幕亮度
-void setScrennManualMode(Context pContext) 设置手动调节亮度模式
+void lowerBrightness(Activity context) 调低窗口亮度
+void raiseBrightness(Activity context) 调高窗口亮度
+int getWindowBrightness(Activity activity)
 void setWindowBrightness(Activity activity, int brightness)  设置当前应用的亮度
 ```     
 

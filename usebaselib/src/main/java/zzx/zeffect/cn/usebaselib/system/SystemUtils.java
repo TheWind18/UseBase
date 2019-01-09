@@ -132,80 +132,83 @@ public class SystemUtils {
         am.setStreamVolume(volumeType, tmpVolume, AudioManager.FLAG_SHOW_UI);
     }
 
-    /**
-     * 获取屏幕当前亮度
-     *
-     * @param pContext
-     * @return
-     */
-    public static int getScreenBrightness(Context pContext) {
-//        Manifest.permission.WRITE_SETTINGS,需要权限
-        if (!PermissionUtils.hasPermissions(pContext, Manifest.permission.WRITE_SETTINGS)) {
-            return 0;
-        }
-        ContentResolver contentResolver = pContext.getContentResolver();
-        int defVal = 125;
-        return Settings.System.getInt(contentResolver,
-                Settings.System.SCREEN_BRIGHTNESS, defVal);
-    }
+//    /**
+//     * 获取屏幕当前亮度
+//     *
+//     * @param pContext
+//     * @return
+//     */
+//    public static int getScreenBrightness(Context pContext) {
+////        Manifest.permission.WRITE_SETTINGS,需要权限
+//        if (!PermissionUtils.hasPermissions(pContext, Manifest.permission.WRITE_SETTINGS)) {
+//            return 0;
+//        }
+//        ContentResolver contentResolver = pContext.getContentResolver();
+//        int defVal = 125;
+//        return Settings.System.getInt(contentResolver,
+//                Settings.System.SCREEN_BRIGHTNESS, defVal);
+//    }
 
-    public static void lowerBrightness(Context context) {
-        int now = getScreenBrightness(context);
+    public static void lowerBrightness(Activity context) {
+        int now = getWindowBrightness(context);
         now = now - 51;
         if (now < 51) {
             now = 51;
         }
-        setScreenBrightness(context, now);
+        if (context instanceof Activity) {
+            setWindowBrightness((Activity) context, now);
+        }
     }
 
-    public static void raiseBrightness(Context context) {
-        int now = getScreenBrightness(context);
+    public static void raiseBrightness(Activity context) {
+        int now = getWindowBrightness(context);
         now = now + 51;
         if (now < 255) {
             now = 255;
         }
-        setScreenBrightness(context, now);
-    }
-
-    /**
-     * 保存屏幕亮度
-     *
-     * @param pContext
-     * @param lighit
-     */
-    public static void setScreenBrightness(Context pContext, int lighit) {
-        setScrennManualMode(pContext);
-        if (lighit > 255) {
-            lighit = 255;
-        } else if (lighit < 0) {
-            lighit = 0;
-        }
-        ContentResolver contentResolver = pContext.getContentResolver();
-        Settings.System.putInt(contentResolver,
-                Settings.System.SCREEN_BRIGHTNESS, lighit);
-    }
-
-    /**
-     * 首先，需要明确屏幕亮度有两种调节模式：
-     * Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC：值为1，自动调节亮度。
-     * Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL：值为0，手动模式。
-     * 如果需要实现亮度调节，首先需要设置屏幕亮度调节模式为手动模式。
-     *
-     * @param pContext
-     */
-    public static void setScrennManualMode(Context pContext) {
-        ContentResolver contentResolver = pContext.getContentResolver();
-        try {
-            int mode = Settings.System.getInt(contentResolver,
-                    Settings.System.SCREEN_BRIGHTNESS_MODE);
-            if (mode == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC) {
-                Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE,
-                        Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
-            }
-        } catch (Settings.SettingNotFoundException e) {
-            e.printStackTrace();
+        if (context instanceof Activity) {
+            setWindowBrightness((Activity) context, now);
         }
     }
+
+//    /**
+//     * 保存屏幕亮度
+//     *
+//     * @param pContext
+//     * @param lighit
+//     */
+//    public static void setScreenBrightness(Context pContext, int lighit) {
+//        if (lighit > 255) {
+//            lighit = 255;
+//        } else if (lighit < 0) {
+//            lighit = 0;
+//        }
+//        ContentResolver contentResolver = pContext.getContentResolver();
+//        Settings.System.putInt(contentResolver,
+//                Settings.System.SCREEN_BRIGHTNESS, lighit);
+//    }
+
+//    /**
+//     * 首先，需要明确屏幕亮度有两种调节模式：
+//     * Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC：值为1，自动调节亮度。
+//     * Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL：值为0，手动模式。
+//     * 如果需要实现亮度调节，首先需要设置屏幕亮度调节模式为手动模式。
+//     *
+//     * @param pContext
+//     */
+//    public static void setScrennManualMode(Context pContext) {
+//        ContentResolver contentResolver = pContext.getContentResolver();
+//        try {
+//            int mode = Settings.System.getInt(contentResolver,
+//                    Settings.System.SCREEN_BRIGHTNESS_MODE);
+//            if (mode == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC) {
+//                Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE,
+//                        Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+//            }
+//        } catch (Settings.SettingNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * 设置当前程序亮度
@@ -223,6 +226,12 @@ public class SystemUtils {
         }
         lp.screenBrightness = brightness / 255.0f;
         window.setAttributes(lp);
+    }
+
+    public static int getWindowBrightness(Activity activity) {
+        Window window = activity.getWindow();
+        WindowManager.LayoutParams lp = window.getAttributes();
+        return (int) (lp.screenBrightness * 255);
     }
 
 }
