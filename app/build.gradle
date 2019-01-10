@@ -20,4 +20,6 @@ android {
 
 dependencies {
     implementation project(':usebaselib')
+    implementation 'com.google.android:flexbox:1.0.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
 }
