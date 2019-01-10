@@ -13,6 +13,8 @@ import android.text.TextUtils;
 
 import java.lang.reflect.Method;
 
+import zzx.zeffect.cn.usebaselib.rom.RomUtils;
+
 /**
  * Created by zeffect on 18-12-12.
  */
@@ -59,6 +61,17 @@ public class PermissionUtils {
 
 
     public static boolean hasAlertPermission(Context pContext) {
+        if (RomUtils.isMIUI(pContext)) {
+            return hasAlertMiui(pContext);
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                return Settings.canDrawOverlays(pContext);
+            }
+        }
+        return true;
+    }
+
+    private static boolean hasAlertMiui(Context pContext) {
         try {
             Object object = pContext.getSystemService(Context.APP_OPS_SERVICE);
             if (object == null) {
