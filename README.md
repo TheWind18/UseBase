@@ -141,6 +141,8 @@ void openWifiSetting(Context pContext)
 ```
 boolean hasPermissions(Context pTarget, String... permissions);
 boolean verifyPermissions(int[] grantResults)   
+boolean hasAlertPermission(Context pContext) 有没有悬浮窗权限，onResume里时，最好延时检测，亲测部分系统onResume时有问题
+void toAlertPermission(Context context) 去授权悬浮窗界面，当前应用。
 ```     
 
 - [ScreenUtils](https://github.com/xuanu/UseBase/blob/master/usebaselib/src/main/java/zzx/zeffect/cn/usebaselib/screen/ScreenUtils.java);        
