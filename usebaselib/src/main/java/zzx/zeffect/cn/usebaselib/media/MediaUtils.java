@@ -1,12 +1,14 @@
-package zzx.zeffect.cn.usebaselib.media;
+package zeffect.cn.musicdemo;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.ref.WeakReference;
+import java.util.logging.LogRecord;
 
 /**
  * <pre>
@@ -39,6 +41,33 @@ public class MediaUtils {
         play(path, null);
     }
 
+    public void play(String nowPath, OnPlayer pOnPlayer) {
+        prepare(nowPath, pOnPlayer);
+    }
+
+    private static final int ProgressCode = 0x10;
+
+    private Handler progressHanlder = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == ProgressCode) {
+                int current = 0;
+                int duration = 0;
+                if (mPlayer != null) {
+                    current = mPlayer.getCurrentPosition();
+                    duration = mPlayer.getDuration();
+                }
+                if (onPlayer != null) {
+                    onPlayer.onProgress(current, duration);
+                }
+                if (current < duration) {
+                    progressHanlder.sendEmptyMessageDelayed(ProgressCode, 1000);//一秒刷新一次
+                }
+            }
+        }
+    };
+
 
     public void playRaw(Context pContext, int id, OnPlayer pPlayer) {
         addPlayListener(pPlayer);
@@ -51,6 +80,10 @@ public class MediaUtils {
             mPlayer = null;
             mPlayer = MediaPlayer.create(pContext, id);
             mPlayer.start();
+            if (onPlayer != null) {
+                onPlayer.onStart();
+            }
+            progressHanlder.sendEmptyMessage(ProgressCode);
         }
         mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -68,9 +101,7 @@ public class MediaUtils {
         });
     }
 
-    public void prepare(String nowPath, OnPlayer pOnPlayer, final boolean prepare2start) {
-        isPrepare = false;
-        canStart = false;
+    private void prepare(String nowPath, OnPlayer pOnPlayer) {
         addPlayListener(pOnPlayer);
         if (TextUtils.isEmpty(nowPath)) {
             stop();
@@ -100,10 +131,11 @@ public class MediaUtils {
             mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
-                    isPrepare = true;
-                    if (prepare2start || canStart) {
-                        mp.start();
+                    mp.start();
+                    if (onPlayer != null) {
+                        onPlayer.onStart();
                     }
+                    progressHanlder.sendEmptyMessage(ProgressCode);
                 }
             });
             mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -125,20 +157,6 @@ public class MediaUtils {
         }
     }
 
-    private boolean isPrepare = false;
-
-    private boolean canStart = false;
-
-    public void start() {
-        canStart = true;
-        if (mPlayer != null && isPrepare) {
-            mPlayer.start();
-        }
-    }
-
-    private void play(String nowPath, OnPlayer pOnPlayer) {
-        prepare(nowPath, pOnPlayer, true);
-    }
 
     public void pause() {
         if (mPlayer != null) {
@@ -157,11 +175,13 @@ public class MediaUtils {
         }
     }
 
-
     /***
      * 关闭播放
      */
     public void stop() {
+        if (progressHanlder.hasMessages(ProgressCode)) {
+            progressHanlder.removeMessages(ProgressCode);
+        }
         if (mPlayer != null) {
             try {
                 if (mPlayer.isPlaying()) mPlayer.pause();
@@ -187,6 +207,8 @@ public class MediaUtils {
 
     public interface OnPlayer {
         void onComplete();
+
+        void onProgress(int current, int duration);
 
         void onStart();
     }
