@@ -207,3 +207,7 @@ void setWindowBrightness(Activity activity, int brightness)  设置当前应用�
 ```     
 
 
+- [JSONObject](https://github.com/xuanu/UseBase/blob/master/usebaselib/src/main/java/zzx/zeffect/cn/usebaselib/json/JSONObject.java);
+> 解决JSON有些为Null的问题，如String为Null的处理
+
+
